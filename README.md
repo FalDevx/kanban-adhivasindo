@@ -76,8 +76,3 @@ src/
 ```
 
 ---
-
-## 📧 Submission
-
-**Email:** admin@adhivasindo.co.id  
-**Format:** `Frontend_nama_tgl_kirim`
