@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+ion-modal {
+  --border-radius: 16px;
+}
+
+ion-content {
+  --background: transparent;
+}
+
+ion-searchbar {
+  padding: 0;
+  --icon-font-size: 20px;
+}
+
+ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+ion-select {
+  max-width: 100%;
+}
+
+/* Drag and Drop Animations */
+.sortable-ghost {
+  opacity: 0.5;
+  background: #f0fdf4 !important;
+}
+
+/* Smooth drag animations */
+.dnd-dragging {
+  z-index: 1000;
+}
+
+/* Drop target highlight */
+.dnd-droppable-over {
+  background-color: #f0fdf4 !important;
+  border-color: #86efac !important;
+}
+
+/* Drag handle cursor */
+[data-dnd-draggable] {
+  cursor: grab;
+}
+
+[data-dnd-dragging] {
+  cursor: grabbing;
+}
