@@ -1,4 +1,4 @@
-import { IonApp, IonToast, setupIonicReact } from '@ionic/react';
+import { IonApp, setupIonicReact } from '@ionic/react';
 import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
@@ -12,11 +12,10 @@ import '@ionic/react/css/display.css';
 
 import { useEffect, useState } from 'react';
 import { useTaskStore } from './store/taskStore';
-import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Board } from './components/Board';
 import { TaskDetailModal } from './components/TaskDetailModal';
-import { Task, Column, Assignee } from './types';
+import { Task, Assignee } from './types';
 
 setupIonicReact();
 
@@ -53,51 +52,49 @@ const sampleTasks: Task[] = [
   {
     id: generateId(),
     title: 'Research for a podcast and video website',
-    description:
-      'Research best practices and tools for creating a podcast and video platform.',
+    description: 'Research best practices and tools for creating a podcast and video platform.',
     columnId: 'todo',
     label: 'Feature',
     priority: 'High',
-    dueDate: 'Aug 8',
+    dueDate: '8 Aug',
     assignees: [sampleAssignees['jd-1'], sampleAssignees['ms-1']],
     subtasks: [],
     attachments: [],
-    coverImage: 'https://images.pexels.com/photos/3721941/pexels-photo-3721941.jpeg?w=400',
+    coverImage: null,
     comments: 0,
     createdAt: new Date().toISOString(),
   },
   {
     id: generateId(),
-    title: 'Debug checkout process for e-commerce website',
+    title: 'Debug checkout process for the e-commerce website',
     description: 'Fix issues with the checkout flow causing cart abandonment.',
     columnId: 'todo',
     label: 'Bug',
     priority: 'High',
-    dueDate: 'Aug 10',
-    assignees: [
-      sampleAssignees['jd-1'],
-      sampleAssignees['ms-1'],
-      sampleAssignees['ab-1'],
-    ],
+    dueDate: '10 Aug',
+    assignees: [sampleAssignees['jd-1'], sampleAssignees['ms-1'], sampleAssignees['ab-1']],
     subtasks: [
-      ...Array(10)
-        .fill(null)
-        .map((_, i) => ({
-          id: generateId(),
-          title: `Completed subtask ${i + 1}`,
-          completed: true,
-        })),
-      ...Array(9)
-        .fill(null)
-        .map((_, i) => ({
-          id: generateId(),
-          title: `Pending subtask ${i + 1}`,
-          completed: false,
-        })),
+      ...Array(10).fill(null).map((_, i) => ({ id: generateId(), title: `Completed subtask ${i + 1}`, completed: true })),
+      ...Array(9).fill(null).map((_, i) => ({ id: generateId(), title: `Pending subtask ${i + 1}`, completed: false })),
     ],
     attachments: [],
     coverImage: null,
     comments: 43,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: generateId(),
+    title: 'Living room interior design',
+    description: 'Design a modern living room interior.',
+    columnId: 'todo',
+    label: 'Feature',
+    priority: 'Low',
+    dueDate: '15 Aug',
+    assignees: [],
+    subtasks: [],
+    attachments: [],
+    coverImage: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?w=400',
+    comments: 0,
     createdAt: new Date().toISOString(),
   },
   {
@@ -107,7 +104,7 @@ const sampleTasks: Task[] = [
     columnId: 'doing',
     label: 'Feature',
     priority: 'Medium',
-    dueDate: 'Aug 12',
+    dueDate: '12 Aug',
     assignees: [sampleAssignees['ms-1'], sampleAssignees['ab-1']],
     subtasks: [],
     attachments: [],
@@ -122,27 +119,30 @@ const sampleTasks: Task[] = [
     columnId: 'doing',
     label: 'Undefined',
     priority: 'Medium',
-    dueDate: 'Aug 11',
+    dueDate: '11 Aug',
     assignees: [],
     subtasks: [],
     attachments: [],
-    coverImage: 'https://images.pexels.com/photos/3938021/pexels-photo-3938021.jpeg?w=400',
+    coverImage: 'https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?w=400',
     comments: 0,
     createdAt: new Date().toISOString(),
   },
   {
     id: generateId(),
-    title: 'Install and set up a marketing tool',
+    title: 'Install and set up a marketing tool for team operations',
     description: 'Configure and integrate the new marketing automation tool.',
     columnId: 'doing',
     label: 'Undefined',
     priority: 'Low',
-    dueDate: 'Aug 14',
-    assignees: [sampleAssignees['cd-1']],
-    subtasks: [],
+    dueDate: '14 Aug',
+    assignees: [sampleAssignees['jd-1'], sampleAssignees['ms-1'], sampleAssignees['cd-1']],
+    subtasks: [
+      ...Array(12).fill(null).map((_, i) => ({ id: generateId(), title: `Step ${i + 1}`, completed: true })),
+      ...Array(8).fill(null).map((_, i) => ({ id: generateId(), title: `Pending ${i + 1}`, completed: false })),
+    ],
     attachments: [],
     coverImage: null,
-    comments: 0,
+    comments: 14,
     createdAt: new Date().toISOString(),
   },
   {
@@ -152,24 +152,27 @@ const sampleTasks: Task[] = [
     columnId: 'review',
     label: 'Issue',
     priority: 'Medium',
-    dueDate: 'Aug 15',
+    dueDate: '15 Aug',
     assignees: [sampleAssignees['ms-1'], sampleAssignees['ab-1']],
     subtasks: [],
     attachments: [],
-    coverImage: null,
+    coverImage: 'https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?w=400',
     comments: 52,
     createdAt: new Date().toISOString(),
   },
   {
     id: generateId(),
-    title: 'Create an icon library for the project',
+    title: 'Create an icon library for the project.',
     description: 'Build a comprehensive icon library following design guidelines.',
     columnId: 'review',
     label: 'Feature',
     priority: 'Medium',
-    dueDate: 'Aug 8',
-    assignees: [],
-    subtasks: [],
+    dueDate: '8 Aug',
+    assignees: [sampleAssignees['jd-1'], sampleAssignees['ab-1']],
+    subtasks: [
+      ...Array(7).fill(null).map((_, i) => ({ id: generateId(), title: `Icon set ${i + 1}`, completed: true })),
+      ...Array(11).fill(null).map((_, i) => ({ id: generateId(), title: `Pending ${i + 1}`, completed: false })),
+    ],
     attachments: [],
     coverImage: null,
     comments: 0,
@@ -182,12 +185,42 @@ const sampleTasks: Task[] = [
     columnId: 'done',
     label: 'Feature',
     priority: 'High',
-    dueDate: 'Aug 5',
-    assignees: [sampleAssignees['jd-1']],
+    dueDate: '5 Aug',
+    assignees: [sampleAssignees['jd-1'], sampleAssignees['ms-1']],
     subtasks: [],
     attachments: [],
     coverImage: null,
     comments: 43,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: generateId(),
+    title: 'Enhance website usability through user feedback',
+    description: 'Collect and analyze user feedback to improve website usability.',
+    columnId: 'done',
+    label: 'Feature',
+    priority: 'Medium',
+    dueDate: '9 Aug',
+    assignees: [sampleAssignees['ab-1'], sampleAssignees['cd-1']],
+    subtasks: [],
+    attachments: [],
+    coverImage: null,
+    comments: 14,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: generateId(),
+    title: 'Kitchen interior design project',
+    description: 'Design and plan the kitchen interior renovation.',
+    columnId: 'done',
+    label: 'Feature',
+    priority: 'Low',
+    dueDate: '20 Aug',
+    assignees: [],
+    subtasks: [],
+    attachments: [],
+    coverImage: 'https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?w=400',
+    comments: 0,
     createdAt: new Date().toISOString(),
   },
   {
@@ -197,9 +230,45 @@ const sampleTasks: Task[] = [
     columnId: 'rework',
     label: 'Feature',
     priority: 'Medium',
-    dueDate: 'Aug 8',
-    assignees: [sampleAssignees['ab-1']],
+    dueDate: '8 Aug',
+    assignees: [sampleAssignees['jd-1'], sampleAssignees['ab-1']],
+    subtasks: [
+      ...Array(7).fill(null).map((_, i) => ({ id: generateId(), title: `Task ${i + 1}`, completed: true })),
+      ...Array(15).fill(null).map((_, i) => ({ id: generateId(), title: `Pending ${i + 1}`, completed: false })),
+    ],
+    attachments: [],
+    coverImage: null,
+    comments: 40,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: generateId(),
+    title: 'Modern building architecture photography',
+    description: 'Capture and edit photos of modern building architecture.',
+    columnId: 'rework',
+    label: 'Feature',
+    priority: 'Low',
+    dueDate: '15 Aug',
+    assignees: [],
     subtasks: [],
+    attachments: [],
+    coverImage: 'https://images.pexels.com/photos/1486785/pexels-photo-1486785.jpeg?w=400',
+    comments: 0,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: generateId(),
+    title: 'Plan and execute training sessions for new hires',
+    description: 'Organize onboarding training for new team members.',
+    columnId: 'rework',
+    label: 'Issue',
+    priority: 'High',
+    dueDate: '9 Aug',
+    assignees: [sampleAssignees['ms-1'], sampleAssignees['cd-1']],
+    subtasks: [
+      ...Array(5).fill(null).map((_, i) => ({ id: generateId(), title: `Session ${i + 1}`, completed: true })),
+      ...Array(14).fill(null).map((_, i) => ({ id: generateId(), title: `Pending ${i + 1}`, completed: false })),
+    ],
     attachments: [],
     coverImage: null,
     comments: 0,
@@ -207,35 +276,39 @@ const sampleTasks: Task[] = [
   },
 ];
 
-const defaultColumns: Column[] = [
-  { id: 'todo', title: 'To Do', color: '#e0e7ff' },
-  { id: 'doing', title: 'Doing', color: '#e0e7ff' },
-  { id: 'review', title: 'Review', color: '#e0e7ff' },
-  { id: 'done', title: 'Done', color: '#e0e7ff' },
-  { id: 'rework', title: 'Rework', color: '#e0e7ff' },
-];
-
 function App() {
-  const { addTask, loadFromStorage, toast, hideToast, tasks } = useTaskStore();
+  const { addTask, getTaskById, addColumn } = useTaskStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [initialized, setInitialized] = useState(false);
+  const [addListOpen, setAddListOpen] = useState(false);
+  const [newListName, setNewListName] = useState('');
 
   useEffect(() => {
-    loadFromStorage();
     const stored = localStorage.getItem('kanban_tasks');
-    if (!stored || Object.keys(stored).length === 0) {
-      sampleTasks.forEach((task) => addTask(task));
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Object.keys(parsed).length > 0) {
+          useTaskStore.getState().loadFromStorage();
+          setInitialized(true);
+          return;
+        }
+      } catch {
+        // invalid data, re-seed
+      }
     }
+    // First time or empty — seed sample data
+    sampleTasks.forEach((task) => addTask(task));
     setInitialized(true);
-  }, [addTask]);
+  }, []);
 
   const handleSelectTask = (taskId: string) => {
     if (taskId.startsWith('new-')) {
       const columnId = taskId.replace('new-', '');
       const newTask: Task = {
         id: generateId(),
-        title: 'New Task',
+        title: '',
         description: '',
         columnId,
         label: 'Undefined',
@@ -250,7 +323,8 @@ function App() {
       };
       setEditingTask(newTask);
     } else {
-      setEditingTask(tasks[taskId] || null);
+      const found = getTaskById(taskId);
+      setEditingTask(found || null);
     }
     setIsModalOpen(true);
   };
@@ -260,20 +334,25 @@ function App() {
     setEditingTask(null);
   };
 
-  if (!initialized) {
-    return <IonApp></IonApp>;
-  }
+  const handleAddList = () => {
+    const name = newListName.trim();
+    if (!name) return;
+    const id = name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now();
+    addColumn({ id, title: name, color: '#e0e7ff' });
+    setNewListName('');
+    setAddListOpen(false);
+  };
+
+  if (!initialized) return <IonApp></IonApp>;
 
   return (
     <IonApp>
-      <div className="flex h-screen bg-board-bg">
-        <div className="w-56 flex-shrink-0">
-          <Sidebar />
-        </div>
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Header />
-          <Board onSelectTask={handleSelectTask} columns={defaultColumns} />
-        </div>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#f1f5f9', overflow: 'hidden' }}>
+        <Header />
+        <Board
+          onSelectTask={handleSelectTask}
+          onAddList={() => setAddListOpen(true)}
+        />
       </div>
 
       {editingTask && (
@@ -284,15 +363,64 @@ function App() {
         />
       )}
 
-      {toast && (
-        <IonToast
-          isOpen={!!toast}
-          onDidDismiss={hideToast}
-          message={toast.message}
-          duration={2000}
-          position="bottom"
-          color={toast.type === 'success' ? 'success' : 'danger'}
-        />
+      {/* ── ADD NEW LIST MODAL ── */}
+      {addListOpen && (
+        <>
+          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 200 }}
+            onClick={() => { setAddListOpen(false); setNewListName(''); }} />
+          <div style={{
+            position: 'fixed', top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: '#fff', borderRadius: '14px',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.18)',
+            zIndex: 201, width: '380px', padding: '28px',
+          }}>
+            <h3 style={{ margin: '0 0 6px', fontSize: '17px', fontWeight: 700, color: '#1e293b' }}>
+              Add New List
+            </h3>
+            <p style={{ margin: '0 0 20px', fontSize: '13px', color: '#94a3b8' }}>
+              Buat kolom baru untuk board Adhivasindo
+            </p>
+            <label style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', letterSpacing: '0.1em', display: 'block', marginBottom: '8px' }}>
+              NAMA KOLOM
+            </label>
+            <input
+              type="text"
+              value={newListName}
+              onChange={(e) => setNewListName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleAddList()}
+              placeholder="e.g. In Progress, Backlog, Testing..."
+              autoFocus
+              style={{
+                width: '100%', padding: '10px 14px', fontSize: '14px',
+                border: '1.5px solid #e2e8f0', borderRadius: '8px',
+                outline: 'none', fontFamily: 'inherit', color: '#1e293b',
+                boxSizing: 'border-box', marginBottom: '20px',
+              }}
+              onFocus={(e) => (e.target.style.borderColor = '#6366f1')}
+              onBlur={(e) => (e.target.style.borderColor = '#e2e8f0')}
+            />
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+              <button
+                onClick={() => { setAddListOpen(false); setNewListName(''); }}
+                style={{ padding: '9px 20px', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#fff', fontSize: '13px', fontWeight: 600, color: '#64748b', cursor: 'pointer' }}>
+                Batal
+              </button>
+              <button
+                onClick={handleAddList}
+                disabled={!newListName.trim()}
+                style={{
+                  padding: '9px 24px', borderRadius: '8px', border: 'none',
+                  background: newListName.trim() ? '#6366f1' : '#e2e8f0',
+                  fontSize: '13px', fontWeight: 600,
+                  color: newListName.trim() ? '#fff' : '#94a3b8',
+                  cursor: newListName.trim() ? 'pointer' : 'not-allowed',
+                }}>
+                Buat List
+              </button>
+            </div>
+          </div>
+        </>
       )}
     </IonApp>
   );
